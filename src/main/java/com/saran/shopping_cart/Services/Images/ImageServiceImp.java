@@ -41,8 +41,12 @@ public class ImageServiceImp implements ImageService {
     }
 
     @Override
-    public void updateImageById(Long imageId, MultipartFile image) {
-
+    public void updateImageById(Long imageId, MultipartFile file) throws IOException, SQLException {
+            Images imageToUpdate = getImageById(imageId);
+            imageToUpdate.setFileType(file.getContentType());
+            imageToUpdate.setFileName(file.getOriginalFilename());
+            imageToUpdate.setImage(new SerialBlob(file.getBytes()));
+            imageRepository.save(imageToUpdate);
     }
 
     @Override

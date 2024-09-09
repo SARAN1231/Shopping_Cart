@@ -60,7 +60,7 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public void updateProduct(AddProductRequest request, Long productId) {
+    public Product updateProduct(AddProductRequest request, Long productId) {
         Optional<Product> productOptional = productRepository.findById(productId);
         if(productOptional.isPresent()) {
             Product product = productOptional.get();
@@ -72,6 +72,7 @@ public class ProductServiceImp implements ProductService {
             Category category = categoryRepository.findByName(request.getCategory().getName());
             product.setCategory(category);
             productRepository.save(product);
+            return productOptional.get();
         }
         else {
             throw new ProductNotFoundException("Product Not Found !");
