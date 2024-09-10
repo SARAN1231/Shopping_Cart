@@ -5,6 +5,7 @@ import com.saran.shopping_cart.Requests.AddProductRequest;
 import com.saran.shopping_cart.Responses.ApiResponse;
 import com.saran.shopping_cart.Services.Product.ProductService;
 import com.saran.shopping_cart.exceptions.ProductNotFoundException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/product")
+@Tag(name = "Product", description = "The product API") // for swaggerUI
+// link - > http://localhost:8080/swagger-ui/index.html#/
 public class ProductController {
 
     private final ProductService productService;
