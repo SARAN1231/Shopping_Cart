@@ -27,7 +27,7 @@ public class CategoryController {
         return ResponseEntity.ok(new ApiResponse("Found !",allCategory));
     }
 
-    @GetMapping("/{categoryId}")
+    @GetMapping("/id/{categoryId}")
     public ResponseEntity<ApiResponse> getCategoryById(@PathVariable Long categoryId) {
         try {
             Category category = categoryService.getCategoryById(categoryId);
@@ -40,7 +40,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Not Found",null));
     }
 
-    @GetMapping("/{categoryName}")
+    @GetMapping("/name/{categoryName}")
     public ResponseEntity<ApiResponse> getCategoryByName(@PathVariable String categoryName) {
         Category category = categoryService.getCategoryByName(categoryName);
         return ResponseEntity.ok(new ApiResponse("Found !",category));
@@ -57,12 +57,13 @@ public class CategoryController {
        }
     }
 
-    @PutMapping("Update/{categoryId}")
+    @PutMapping("update/{categoryId}")
     public ResponseEntity<ApiResponse> updateCategory(@PathVariable Long categoryId, @RequestBody AddCategoryRequest category) {
         try {
             Category categoryToUpdate = categoryService.getCategoryById(categoryId);
             if(categoryToUpdate != null) {
                 categoryService.updateCategory(category, categoryId);
+                return ResponseEntity.ok(new ApiResponse("Updated !",category));
             }
         }
         catch (ResourceNotFoundException e) {
@@ -75,7 +76,7 @@ public class CategoryController {
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Long categoryId) {
         try {
             categoryService.deleteCategory(categoryId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiResponse("Deleted !",categoryId));
+            return ResponseEntity.ok(new ApiResponse("Deleted !",categoryId));
         }
         catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Category not found", HttpStatus.NOT_FOUND.value()));

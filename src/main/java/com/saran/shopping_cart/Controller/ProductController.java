@@ -16,9 +16,11 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService)
+    {
         this.productService = productService;
     }
+
     @GetMapping("/all-products")
     public ResponseEntity<ApiResponse> getAllProducts() {
         try {
@@ -29,7 +31,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/id/{productId}")
     public ResponseEntity<ApiResponse> getProductById(@PathVariable Long productId) {
         try{
             Product product = productService.getProductById(productId);
@@ -40,18 +42,20 @@ public class ProductController {
         }
     }
 
- @PostMapping("add-product")
+    @PostMapping("add-product")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product) {
-        try{
+        try {
             Product product1 = productService.addProduct(product);
             return ResponseEntity.ok(new ApiResponse("Successfully added product", product1));
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error", e.getMessage()));
         }
     }
 
-    @PutMapping("update/{productId}")
+
+
+
+    @PutMapping("/update/{productId}")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable Long productId, @RequestBody AddProductRequest product) {
         try{
             Product product1 = productService.updateProduct(product,productId);
@@ -73,7 +77,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("{categoryName}")
+    @GetMapping("/category/{categoryName}")
     public ResponseEntity<ApiResponse> getProductByCategory(@PathVariable String categoryName) {
         try{
             List<Product> products = productService.getProductsByCategoryName(categoryName);
@@ -87,7 +91,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("{brandName}")
+    @GetMapping("/brand/{brandName}")
     public ResponseEntity<ApiResponse> getProductByBrand(@PathVariable String brandName) {
         try{
             List<Product> products = productService.getProductsByBrand(brandName);

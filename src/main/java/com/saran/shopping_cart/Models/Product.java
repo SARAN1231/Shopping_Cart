@@ -1,5 +1,6 @@
 package com.saran.shopping_cart.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Product {
     private Integer inventory;
     private String description;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

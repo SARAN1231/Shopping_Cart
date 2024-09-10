@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ImageService {
 
-    Images getImageById(Long id);
+    byte[] getImageById(Long id);
     void deleteImageById(Long id);
     void updateImageById(Long imageId, MultipartFile image) throws IOException, SQLException;
     List<ImageDto> saveImage(List<MultipartFile> image, Long productId) throws IOException, SQLException;
